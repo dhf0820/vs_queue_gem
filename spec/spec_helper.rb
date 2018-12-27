@@ -1,7 +1,8 @@
 require "bundler/setup"
 require 'pry'
+require 'bunny'
 Bundler.setup
-
+#require 'vs_queue'
 
 # require "demo_gem"
 

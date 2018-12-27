@@ -9,7 +9,8 @@ require 'base64'
       @connection = MqConnection.connection
       @ch = @connection.create_channel
       @ch.prefetch(1) # allow for more than one worker
-      @queue = @ch.queue(queue_name, :persistent => true, durable: true, auto_delete: false, exclusive: false)
+      @queue = @ch.queue(queue_name, :persistent => true, durable: true, 
+            auto_delete: false, exclusive: false)
     end
 
     def publish(data)

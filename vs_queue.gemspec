@@ -45,11 +45,6 @@ Gem::Specification.new do |spec|
 
   #files         = Dir.chdir(File.expand_path('./lib', __FILE__)) do  
   spec.files         = Dir.chdir(File.expand_path('../', __FILE__)) do 
-    puts "\n"
-    puts Dir.pwd
-    puts File.expand_path('../', __FILE__)
-    puts "Spec.files: #{spec.files}"
-    puts "\n"
     `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   end
 
@@ -67,5 +62,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "minitest", "~> 5.1"
   spec.add_development_dependency 'pry-byebug', '~> 3.6'
   spec.add_development_dependency 'pry-coolline'
+  spec.add_development_dependency "simplecov" 
   #spec.add_development_dependency "guard-rubocop"
 end
