@@ -7,7 +7,7 @@ require "lib/version"
 
 
 Gem::Specification.new do |spec|
-  spec.name          = "vs_queue_gem"
+  spec.name          = "vs_queue"
   spec.version       =  VsQueueGem::VERSION
   spec.authors       = ["Donald French"]
   spec.email         = ["dhfrench@vertisoft.com"]
