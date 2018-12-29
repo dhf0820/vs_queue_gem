@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["dhfrench@vertisoft.com"]
 
   spec.summary       = %q{All models used by IDS processes.}
-  spec.description   = %q{require 'vs_queue_gem' then require necessary models/libs using
+  spec.description   = %q{require 'vs_queue' then require necessary models/libs using
   require 'models' or 'lib'.  Local models ar require './models' or './lib'}
   spec.homepage      = "http://vertisoft.com"
 
@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   end
 
   # spec.files = [
-  #   "lib/vs_queue_gem.rb",
+  #   "lib/vs_queue.rb",
   #   "lib/models/version.rb",
   #   "lib/models/theresa.rb",
   #   "lib/models/work_queue.rb"
