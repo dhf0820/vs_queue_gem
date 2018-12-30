@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    vs_queue (0.1.0)
+    vs_queue (0.1.2)
       bunny (~> 2.11)
       pry (~> 0.11)
 
@@ -63,4 +63,4 @@ DEPENDENCIES
   vs_queue!
 
 BUNDLED WITH
-   1.16.6
+   1.17.2

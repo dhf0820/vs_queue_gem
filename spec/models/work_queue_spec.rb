@@ -25,7 +25,7 @@ RSpec.describe WorkQueue do
     queue.close
   end
 
-  it "Retrieves a message" do
+  it "Retrieves a message", focus: true do
     puts "Retrieves a message from the queue"
     queue = WorkQueue.new('test_queue')
     data = {}
@@ -35,7 +35,8 @@ RSpec.describe WorkQueue do
     queue.subscribe(manual: true, block: true) do |body, delivery_info, properties|
       data = body
       puts " subscribe received: #{data}  :  #{body}"
-      queue.ack(delivery_info.delivery_tag)
+      #queue.ack(delivery_info.delivery_tag)
+      queue.ack
       expect(data).to_not be_nil
       expect(data[:my_love]).to eql "Theresa French"
       exit

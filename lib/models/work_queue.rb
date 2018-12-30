@@ -37,6 +37,8 @@ require 'base64'
     
     def subscribe(manual: true, block: true)
       @queue.subscribe(:manual_ack => manual, :block => block) do |delivery_info, properties, body|
+        @delivery_info = delivery_info
+        @properties =  properties
 
         puts "Received from queue: #{body}"
 
@@ -46,7 +48,22 @@ require 'base64'
         puts "Yielding"
         yield(body, delivery_info, properties)
         puts "@@@back from yield\n\n"
-        exit
+      end
+    end 
+
+    def subscribe_simple(manual: true, block: true)
+      @queue.subscribe(:manual_ack => manual, :block => block) do |delivery_info, properties, body|
+        @delivery_info = delivery_info
+        @properties =  properties
+
+        puts "Received from queue: #{body}"
+
+        # if body
+           body = JSON.parse body, symbolize_names: true
+        # end
+        puts "Yielding"
+        yield(body)
+        puts "@@@back from yield\n\n"
       end
     end 
 
@@ -92,12 +109,20 @@ require 'base64'
       @@connection = nil
     end
 
-    def ack(msg)
+    def ack(msg = @delivery_info.delivery_tag)
       @ch.ack(msg)
     end
 
-    def nack(msg)
+    # def ack()
+    #   @ch.ack(@delivery_info.delivery_tag)
+    # end
+
+    def nack(msg = @delivery_info.delivery_tag)
       @ch.nack(msg)
     end
+
+    # def nack()
+    #   @ch.nack(@delivery_info.delivery_tag)
+    # end
   end
 #end
