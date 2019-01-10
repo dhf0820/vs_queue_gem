@@ -3,7 +3,7 @@
 
 class MqConnection
     @@connection = nil
-    @@url = ENV['VS_AMQP']
+    @@url = ENV['EVENT_URL']
 
     def self.connection
       if @@connection.nil?
@@ -13,8 +13,16 @@ class MqConnection
       @@connection
     end
   
+    def self.url=(url)
+      @@url = ENV['EVENT_URL'] = url
+    end
+
+    def self.url
+      @@url
+    end
+
     def self.set_url(url)
-      @@url = url
+      @@url = ENV['EVENT_URL'] = url
     end
 
     def self.current_url
