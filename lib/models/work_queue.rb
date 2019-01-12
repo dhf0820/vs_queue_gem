@@ -39,14 +39,14 @@ require 'base64'
       @queue.subscribe(:manual_ack => manual, :block => block) do |delivery_info, properties, body|
         @delivery_info = delivery_info
         @properties =  properties
-
-        puts "Received from queue: #{body}"
+puts " Properties: #{@properties}"
+        puts "Received from queue: #{body.class}  -   #{body}"
 
         # if body
-           body = JSON.parse body, symbolize_names: true
+          data = JSON.parse body, symbolize_names: true
         # end
         puts "Yielding"
-        yield(body, delivery_info, properties)
+        yield(data, delivery_info, properties)
         puts "@@@back from yield\n\n"
       end
     end 

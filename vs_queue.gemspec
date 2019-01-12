@@ -1,6 +1,6 @@
-require 'pry'
+#require 'pry'
 
-puts "Current Folder: #{Dir.pwd}"
+#puts "Current Folder: #{Dir.pwd}"
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "lib/version"

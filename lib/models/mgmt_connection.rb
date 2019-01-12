@@ -1,7 +1,11 @@
 
-class EventConnection
+class MgmtConnection
+  DEFAULT_URL='amqp://zvarvoot:hjFqTq-3JGVRB14eIa3dU3uQMjbfcS06@caterpillar.rmq.cloudamqp.com/zvarvoo'
   @@connection = nil
-  @@url = ENV['EVENT_AMQP']
+  @@url = ENV['MGMT_AMQP']
+  if @@url.nil? || @url.blank?
+    @@url = ENV['MGMT_AMQP'] = DEFAULT_URL
+  end
 
   def self.connection
     if @@connection.nil?
@@ -12,7 +16,7 @@ class EventConnection
   end
 
   def self.url=(url)
-    @@url = ENV['EVENT_URL'] = url
+    @@url = ENV['MGMT_AMQP'] = url
   end
 
   def self.url

@@ -7,7 +7,8 @@ require 'json'
 RSpec.describe WorkQueue do
   before :all do
     url = "amqp://dhf:Sacj0nhat1@cat.vertisoft.com/ChartArchive"
-    ENV['VS_AMQP']=url
+    MqConnection.url = url
+    #ENV['VS_AMQP']=url
   end
 
   it 'creates a connection with the server' do
@@ -16,7 +17,6 @@ RSpec.describe WorkQueue do
   end
 
   it 'queues a message' do
-    
     queue = WorkQueue.new('test_queue')
     data = {}
     data[:my_love] = "Theresa French"
@@ -25,7 +25,7 @@ RSpec.describe WorkQueue do
     queue.close
   end
 
-  it "Retrieves a message", focus: true do
+  it "Retrieves a message" do
     puts "Retrieves a message from the queue"
     queue = WorkQueue.new('test_queue')
     data = {}
@@ -34,7 +34,7 @@ RSpec.describe WorkQueue do
     puts "calling queue.subscribe"
     queue.subscribe(manual: true, block: true) do |body, delivery_info, properties|
       data = body
-      puts " subscribe received: #{data}  :  #{body}"
+      puts " \nsubscribe received:#{data.class} -- #{data}  :  #{body}\n"
       #queue.ack(delivery_info.delivery_tag)
       queue.ack
       expect(data).to_not be_nil

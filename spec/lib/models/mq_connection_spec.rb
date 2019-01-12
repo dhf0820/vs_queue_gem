@@ -3,7 +3,7 @@ require './lib/models/mq_connection'
 require 'json'
 
 
-RSpec.describe MqConnection, focus: true do
+RSpec.describe MqConnection do
   before :all do
     @url = "amqp://dhf:Sacj0nhat1@cat.vertisoft.com/ChartArchive"
     ENV['VS_AMQP']=@url
@@ -13,7 +13,7 @@ RSpec.describe MqConnection, focus: true do
     expect(ENV['VS_AMQP']).to eql @url
   end
 
-  it "sets the url to custom", focus: true do
+  it "sets the url to custom"  do
     MqConnection.set_url("testurl")
     expect(MqConnection.current_url()).to eql "testurl"
   end
