@@ -1,6 +1,6 @@
 
 class MgmtConnection
-  DEFAULT_URL='amqp://zvarvoot:hjFqTq-3JGVRB14eIa3dU3uQMjbfcS06@caterpillar.rmq.cloudamqp.com/zvarvoo'
+  DEFAULT_URL='amqp://zvarvoot:hjFqTq-3JGVRB14eIa3dU3uQMjbfcS06@caterpillar.rmq.cloudamqp.com/zvarvoot'
   @@connection = nil
   @@url = ENV['MGMT_AMQP']
   if @@url.nil? || @url.blank?

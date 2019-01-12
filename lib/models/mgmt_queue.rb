@@ -15,7 +15,7 @@ class MgmtQueue
           auto_delete: false, exclusive: false)
   end
 
-  def publish(data: data, content_type: 'application/json')
+  def publish(data: nil, content_type: 'application/json')
     "Publishing #{data.class}"
     unless data['image'].nil?
       data['image'] = Base64.encode64(data['image'])
@@ -27,12 +27,12 @@ class MgmtQueue
             :durable => true, :exclusive => false, :content_type => content_type)
   end
 
-  def publish_topic(topic: topic, data: data, content_type: 'application/json')
+  def publish_topic(topic: '#', data: nil, content_type: 'application/json')
     unless data['image'].nil?
       data['image'] = Base64.encode64(data['image'])
     end
     json = data.to_json
-    topic_exchange(topic).publish(json, routing_key: @queue.name, :persistent => true, :auto_delete => false,
+    topic_exchange(_topic).publish(json, routing_key: @queue.name, :persistent => true, :auto_delete => false,
                                 :durable => true, :exclusive => false, :content_type => content_type)
   end
   
