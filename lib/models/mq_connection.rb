@@ -2,11 +2,20 @@
 
 
 class MqConnection
-    @@connection = nil
-    @@url = ENV['EVENT_URL']
+  DEFAULT_URL='amqp://zvarvoot:hjFqTq-3JGVRB14eIa3dU3uQMjbfcS06@caterpillar.rmq.cloudamqp.com/zvarvoot'
+  @@connection = nil
+  #@@url = nil
+  @@url = ENV['VS_AMQP']
+  # if @@url.nil? || @url.blank?
+  #   @@url = ENV['VS_AMQP'] = DEFAULT_URL
+  # end
 
     def self.connection
       if @@connection.nil?
+        if @@url.nil? || @@url.blank?
+          @@url = DEFAULT_URL
+        end
+
         @@connection = Bunny.new(@@url)
         @@connection.start
       end
@@ -14,7 +23,7 @@ class MqConnection
     end
   
     def self.url=(url)
-      @@url = ENV['EVENT_URL'] = url
+      @@url = ENV['VS_AMQP'] = url
     end
 
     def self.url
@@ -22,7 +31,7 @@ class MqConnection
     end
 
     def self.set_url(url)
-      @@url = ENV['EVENT_URL'] = url
+      @@url = ENV['VS_AMQP'] = url
     end
 
     def self.current_url
