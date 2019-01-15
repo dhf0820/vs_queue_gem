@@ -5,17 +5,18 @@ class MqConnection
   DEFAULT_URL='amqp://zvarvoot:hjFqTq-3JGVRB14eIa3dU3uQMjbfcS06@caterpillar.rmq.cloudamqp.com/zvarvoot'
   @@connection = nil
   #@@url = nil
-  @@url = ENV['VS_AMQP']
+  #@@url = ENV['VS_AMQP']
   # if @@url.nil? || @url.blank?
   #   @@url = ENV['VS_AMQP'] = DEFAULT_URL
   # end
+
 
     def self.connection
       if @@connection.nil?
         if @@url.nil? || @@url.blank?
           @@url = DEFAULT_URL
         end
-
+STDERR.puts "MqConnection starting #{@@url}"
         @@connection = Bunny.new(@@url)
         @@connection.start
       end

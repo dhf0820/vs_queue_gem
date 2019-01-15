@@ -11,8 +11,10 @@ RSpec.describe LogQueue, focus: true do
   end
 
   it 'Confirms there is an ENV for the queue'  do
-    expect(ENV['MGMT_AMQP']).to eql @url
+
     expect(MgmtConnection.url).to eql @url
+    c = MgmtConnection.connection
+    expect(ENV['MGMT_AMQP']).to eql @url
   end
 
   it 'Queues and receives a message', focus: true do

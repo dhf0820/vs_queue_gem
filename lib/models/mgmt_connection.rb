@@ -11,9 +11,10 @@ class MgmtConnection
 
   def self.connection
     if @@connection.nil?
-      if @@url.nil? || @@url.blank?
+      if @@url.nil? || @@url.empty?
         @@url = DEFAULT_URL
       end
+      ENV['MGMT_AMQP'] = @@url
       STDERR.puts "MgmtConnection starting #{@@url}"
       @@connection = Bunny.new(@@url)
       @@connection.start
