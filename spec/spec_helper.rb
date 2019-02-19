@@ -26,7 +26,7 @@ RSpec.configure do |config|
         #rspec configuration
 
         
-  #config.filter_run :focus => true
+  config.filter_run :focus => true
 
 
   config.expect_with :rspec

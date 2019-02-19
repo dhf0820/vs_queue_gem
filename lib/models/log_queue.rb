@@ -1,24 +1,11 @@
 require 'bunny'
 require 'base64'
-require_relative 'mgmt_queue'
+#require_relative 'mgmt_queue'
 
 
 class LogQueue
 
   @@current = nil
-
-  def self.post(process, tags, message)
-    if (@@current.nil?)
-      STDERR.puts "\n\n!!!!   Logging was not initialized, NO LOGGING   !!!!\n\n"
-      return
-    end
-    @@current.send(process, tags, message)
-  end
-
-  def self.active
-    @@current
-  end
-
 
   def initialize(customer_name, container_name, container_id)
     @container_name = container_name
@@ -29,10 +16,28 @@ class LogQueue
     @@current = self
   end
   
-  def send(process, tags, message)
+  def self.post(facility, process, tags, message)
+    if (@@current.nil?)
+      @@current = LogQueue.new($customer_name, $container_name, $container_id)
+      # STDERR.puts "\n\n!!!!   Logging was not initialized, NO LOGGING   !!!!\n\n"
+      # return
+    end
+    @@current.send(facility, process, tags, message)
+  end
+
+  def self.active
+    if @@current.nil?
+      @@current = LogQueue.new($customer_name, $container_name, $container_id)
+    end
+    @@current
+  end
+
+  
+  def send(facility, process, tags, message)
     l = {}
     l[:container_name] = @container_name
-    l[:container_id] = @container_id[0..10]
+    l[:container_id] = @container_id   #[0..10]
+    l[:facility] = facility
     l[:process] = process
     l[:tags] = tags.split(',')
     l[:message] = message

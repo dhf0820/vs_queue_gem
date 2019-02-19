@@ -42,7 +42,8 @@ class MgmtQueue
       @properties =  properties
 
      # puts "\nReceived from Rabbit queue: #{body.class}  -  #{body}\n"
-      data = JSON.parse (JSON.parse body, symbolize_names: true), symbolize_names: true
+      data = JSON.parse(body).deep_transform_keys(&:to_sym)
+      # data = JSON.parse (JSON.parse body, symbolize_names: true), symbolize_names: true
 
       #puts "\n    !!! data type: #{data.class} -- #{data}"
       yield(data, delivery_info, properties)
@@ -54,14 +55,14 @@ class MgmtQueue
     @queue.subscribe(:manual_ack => manual, :block => block) do |delivery_info, properties, body|
       @delivery_info = delivery_info
       @properties =  properties
-      body = JSON.parse body, symbolize_names: true
+      #body = JSON.parse body, symbolize_names: true
       puts "Received from queue: #{body}"
 
       # if body
-          body = JSON.parse body, symbolize_names: true
+      data = JSON.parse(body).deep_transform_keys(&:to_sym)
       # end
       puts "Yielding"
-      yield(body)
+      yield(data)
       puts "@@@back from yield\n\n"
     end
   end 

@@ -1,15 +1,16 @@
 require 'bunny'
 require 'base64'
+require 'json'
+require_relative 'mgmt_connection'
 
 
-#module DemoGem
-  class WorkQueue
+  class MgmtWorkQueue
     @@connection = nil
 
     def initialize(queue_name)
       if @@connection.nil?
         puts "Creating new Rabbit Connection"
-        @@connection = MqConnection.connection
+        @@connection = MgmtConnection.connection
       end
       @ch = @@connection.create_channel
       @ch.prefetch(1) # allow for more than one worker
@@ -39,13 +40,13 @@ require 'base64'
       @queue.subscribe(:manual_ack => manual, :block => block) do |delivery_info, properties, body|
         @delivery_info = delivery_info
         @properties =  properties
-#puts " Properties: #{@properties}"
+        puts " Properties: #{@properties}"
         puts "Received from queue: #{body.class}  -   #{body}"
 
         # if body
-        data = JSON.parse(body).deep_transform_keys(&:to_sym)
+          data = JSON.parse body, symbolize_names: true
         # end
-        #puts "Yielding"
+        puts "Yielding"
         yield(data, delivery_info, properties)
         puts "@@@back from yield\n\n"
       end
@@ -59,10 +60,10 @@ require 'base64'
         puts "Received from queue: #{body}"
 
         # if body
-        data = JSON.parse(body).deep_transform_keys(&:to_sym)
+           body = JSON.parse body, symbolize_names: true
         # end
         puts "Yielding"
-        yield(data)
+        yield(body)
         puts "@@@back from yield\n\n"
       end
     end 
@@ -105,7 +106,7 @@ require 'base64'
     def close
       #@ch.close
       puts "Closing Connection"
-      MqConnection.close
+      MgmtConnection.close
       @@connection = nil
     end
 
@@ -125,4 +126,4 @@ require 'base64'
     #   @ch.nack(@delivery_info.delivery_tag)
     # end
   end
-#end
+
