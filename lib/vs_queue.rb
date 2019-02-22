@@ -1,6 +1,6 @@
 #require 'mongoid'
 require 'bunny'
-require 'pry'
+#require 'pry'
 
 require 'models/mq_connection'
 require 'models/mgmt_connection'
